@@ -9,7 +9,7 @@ export default definePlugin({
     ],
     patches: [
         {
-            find: "looking_for:{",
+            find: "BETTER_THAN_YOU]:{",
             replacement: {
                 match: /(type:)"radio"/,
                 replace: "$1\"checkbox\""
