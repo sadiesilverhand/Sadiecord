@@ -56,7 +56,7 @@ function Switches() {
             key: "useQuickCss",
             title: "Enable Custom CSS",
         },
-        !IS_WEB && {
+        {
             key: "enableReactDevtools",
             title: "Enable React Developer Tools",
             restartRequired: true
