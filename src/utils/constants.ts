@@ -647,8 +647,8 @@ export const Devs = /* #__PURE__*/ Object.freeze({
         id: 304239816466235392n
     },
     sadie: {
-        name: "sadie",
-        id: 0n,
+        name: "maddie",
+        id: 1298435571395330108n,
     },
     angelcube: {
         name: "angelcube",
