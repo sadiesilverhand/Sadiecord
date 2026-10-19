@@ -38,7 +38,7 @@ async function registerBind(k: string, a: string, lua: boolean): Promise<void> {
         const sock = createConnection({
             path: produceSocketPath(""),
         }).setEncoding("utf-8");
-        const command = lua ? `/eval hl.bind("SUPER + SHIFT + ${k}", hl.dsp.event("${socksig}:action"), { release = true, transparent = true })` : `/keyword bindrt SUPER SHIFT,${k},event,${socksig}:${a}`;
+        const command = lua ? `/eval hl.bind("SUPER + SHIFT + ${k}", hl.dsp.event("${socksig}:${a}"), { release = true, transparent = true })` : `/keyword bindrt SUPER SHIFT,${k},event,${socksig}:${a}`;
 
         console.log(command);
 
