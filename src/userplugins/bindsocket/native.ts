@@ -33,12 +33,12 @@ let sock2: Socket;
 
 const socksig = "bindsock-call";
 
-async function registerBind(k: string, a: string): Promise<void> {
+async function registerBind(k: string, a: string, lua: boolean): Promise<void> {
     return new Promise(async (r) => {
         const sock = createConnection({
             path: produceSocketPath(""),
         }).setEncoding("utf-8");
-        const command = `/keyword bindrt SUPER SHIFT,${k},event,${socksig}:${a}`;
+        const command = lua ? `/eval hl.bind("SUPER + SHIFT + ${k}", hl.dsp.event("${socksig}:action"), { release = true, transparent = true })` : `/keyword bindrt SUPER SHIFT,${k},event,${socksig}:${a}`;
 
         console.log(command);
 
@@ -73,12 +73,12 @@ async function unregisterBind(k: string): Promise<void> {
     });
 }
 
-function registerBinds(b: BindDef) {
+function registerBinds(b: BindDef, lua: boolean) {
     console.log("recieved binds to register", b);
 
     Promise.all(
         Object.entries(b).map(async (args) => {
-            await registerBind(...args);
+            await registerBind(...args, lua);
             console.log("Binded", args[0], "to", args[1]);
         }),
     );
@@ -101,7 +101,7 @@ export function bindLoop(): Promise<string> {
     });
 }
 
-export function start(_, b: BindDef) {
+export function start(_, b: BindDef, lua: boolean) {
     console.log("hai from bindsocket native");
 
     const s = produceSocketPath("2");
@@ -144,7 +144,7 @@ export function start(_, b: BindDef) {
     });
 
     // path doesn't need to be evaluated because we already did
-    registerBinds(b);
+    registerBinds(b, lua);
 
     app.on("before-quit", () => stop(null, b));
 }

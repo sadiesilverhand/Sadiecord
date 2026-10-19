@@ -42,6 +42,11 @@ const settings = definePluginSettings({
         description: "binds to use\nFULLY RESTART YOUR CLIENT AFTER CHANGING",
         default: "A:mute\nS:deaf",
     },
+    lua: {
+        type: OptionType.BOOLEAN,
+        default: true,
+        description: "are you using the new hypr config format"
+    }
 });
 
 function cleanup() {
@@ -73,7 +78,7 @@ export default definePlugin({
 
         registeredBinds = obj;
 
-        Native.start(registeredBinds);
+        Native.start(registeredBinds, settings.store.lua);
         handleLoop();
     },
     stop() {
